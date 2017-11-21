@@ -41,8 +41,8 @@ def index():
 
 
 
-@app.route('/test',methods=['GET','POST'])
-def test():
+@app.route('/temp',methods=['GET','POST'])
+def temp():
     imgstring = "empty"
 
     img_request = (request.form)
@@ -72,7 +72,7 @@ def test():
         print ("saved as",filename)
         f.write(imgdata)
 
-    return render_template('test.html')
+    return render_template('temp.html')
 
 
 

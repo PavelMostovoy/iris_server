@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
-  <meta charset="utf-8">
-  <title>IRIS</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
-
+    <meta charset="UTF-8">
+    <title>video_test</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
 </head>
 <body>
-  <div id="video-container">
-    <video id="camera-stream" width="500" autoplay></video>
-      <canvas id="canvas" width="320" height="240" ></canvas>
-     <button id="snap">Snap Photo</button>
+<div id="video-container">
+   <video id="video" width="640" height="480" autoplay></video>
+</div>
 
-  </div>
+<div id="controls-container">
+   <button id="snap">Snap Photo</button>
+</div>
 
-  <script src="{{ url_for('static',filename='js/script.js')}}"></script>
+
+<div id="image-container">
+    <canvas id="canvas" width="640" height="480" ></canvas>
+</div>
+
+
+
+
+<script src="{{ url_for('static',filename='js/script.js')}}"></script>
 </body>
-
-
 </html>

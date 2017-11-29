@@ -1,55 +1,18 @@
-var http = new XMLHttpRequest();
-var url = "/test";
+// Grab elements, create settings, etc.
 var video = document.getElementById('video');
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
-var dataURL = canvas.toDataURL('image/png');
-var params =  "imgBase64=" + dataURL;
+var http = new XMLHttpRequest();
+var url = "/api";
 
 
-
-window.onload = function() {
-
-  // Normalize the various vendor prefixed versions of getUserMedia.
-  navigator.getUserMedia = (navigator.getUserMedia ||
-                            navigator.webkitGetUserMedia ||
-                            navigator.mozGetUserMedia || 
-                            navigator.msGetUserMedia);
-// Get a reference to the video element on the page.
-
-
-// Check that the browser supports getUserMedia.
-// If it doesn't show an alert, otherwise continue.
-if (navigator.getUserMedia) {
-  // Request the camera.
-  navigator.getUserMedia(
-    // Constraints
-    {
-      video: true
-    },
-
-    // Success Callback
-    function(localMediaStream) {
-        // Get a reference to the video element on the page.
-        var vid = document.getElementById('camera-stream');
-
-        // Create an object URL for the video stream and use this
-        // to set the video source.
-        vid.src = window.URL.createObjectURL(localMediaStream);
-
-    },
-
-    // Error Callback
-    function(err) {
-      // Log the error to the console.
-      console.log('The following error occurred when trying to use getUserMedia: ' + err);
-    }
-  );
-
-} else {
-  alert('Sorry, your browser does not support getUserMedia');
-}
-							
+// Get access to the camera!
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Not adding `{ audio: true }` since we only want video now
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+    video.src = window.URL.createObjectURL(stream);
+    video.play();
+    });
 }
 
 
@@ -58,16 +21,19 @@ if (navigator.getUserMedia) {
 document.getElementById("snap").addEventListener("click", function() {
     var params;
     var dataURL;
-    context.drawImage(video, 0, 0, 320, 240);
-
+    context.drawImage(video, 0, 0, 640,480);
 
     dataURL = canvas.toDataURL('image/png');
-
     params = "imgBase64=" + dataURL;
 
-    http.open("POST", url,true);
-	    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	    http.send( params);
+    //console.log(params);
 
+    http.open("POST", url,true);
+    //http.onreadystatechange = function() {
+   // console.log(http.responseText);
+ // }
+    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http.send(params);
 
 });
+

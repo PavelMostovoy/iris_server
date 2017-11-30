@@ -8,7 +8,7 @@ eye_cascade = cv2.CascadeClassifier('static/data/haarcascade_eye.xml')
 classifier = keras.models.load_model("static/data/model.h5")
 
 image_path = "media/"
-#image_name = "968_many.jpg"
+image_name = "download.png"
 
 
 def locator(image_name,image_path):
@@ -26,9 +26,9 @@ def locator(image_name,image_path):
     return names
 
 
-# processor = locator(image_name,image_path)
+processor = locator(image_name,image_path)
 
-def prediction(names,image_path="media/"):
+def prediction(names,image_path):
     results = []
     for name in names :
         test_image = image.load_img(image_path + name, target_size=(64, 64))
@@ -54,17 +54,12 @@ def prediction(names,image_path="media/"):
 
 
 
-def f_prediction(image_name,image_path="media/"):
-    return prediction(locator(image_name,image_path))
 
 
 
 
 
-'''
-temp = prediction(processor)
+temp = prediction(processor,image_path)
 
-temp2 = f_prediction(image_name,image_path)
 
-print (temp2)
-'''
+print (temp)
